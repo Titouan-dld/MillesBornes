@@ -1,4 +1,4 @@
-package carte;
+package cartes;
 
 public class Botte extends Probleme {
 
@@ -9,6 +9,14 @@ public class Botte extends Probleme {
 	@Override
 	public String toString() {
 		return this.getType().getBotte();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Botte botte) {
+			return type.equals(botte.getType());
+		}
+		return false;
 	}
 	
 }

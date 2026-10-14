@@ -1,6 +1,4 @@
-package carte;
-
-import carte.Carte;
+package cartes;
 
 public abstract class Probleme extends Carte {
 	Type type;
@@ -13,6 +11,7 @@ public abstract class Probleme extends Carte {
 		super();
 		this.type = type;
 	}
+
 	
 	
 }

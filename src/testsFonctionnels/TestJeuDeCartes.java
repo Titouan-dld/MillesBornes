@@ -1,6 +1,6 @@
 package testsFonctionnels;
 
-import carte.JeuDeCartes;
+import cartes.JeuDeCartes;
 
 public class TestJeuDeCartes {
 	public static void main(String[] args) {

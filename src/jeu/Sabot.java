@@ -3,7 +3,7 @@ package jeu;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
-import carte.Carte;
+import cartes.Carte;
 
 public class Sabot implements Iterable<Carte>{
 
@@ -29,8 +29,12 @@ public class Sabot implements Iterable<Carte>{
 		nombreOperation++;
 	}
 	
+	@Override
+	public Iterator<Carte> iterator() {
+		return new Iterateur();
+	}
 
-	private class Iterateur<E extends Carte> implements Iterator<Carte>{
+	private class Iterateur implements Iterator<Carte>{
 		
 		private int indiceIterateur = 0;
 		private boolean nextEffectue = false;
@@ -48,37 +52,40 @@ public class Sabot implements Iterable<Carte>{
 		
 		public Carte next() {
 			verificationConcurrence();
-			nombreOperation++;
-			nombreOperationReference++;
+			Carte carte = sabot[indiceIterateur];
 			indiceIterateur++;
 			nextEffectue = true;
-			return sabot[indiceIterateur];
+			return carte;
 		}
 		
 		public void remove() {
 			verificationConcurrence();
+			
+			if (!nextEffectue) {
+			    throw new IllegalStateException();
+			}
+			nextEffectue = false;
+			
 			for(int i = indiceIterateur; i<nbCartes; i++) {
 				sabot[i-1] = sabot[i];
 			}
-			sabot[nbCartes] = null;
+			sabot[nbCartes-1] = null;
 			nbCartes--;
 			nombreOperation++;
 			nombreOperationReference++;
-			
+			indiceIterateur += -1;
 		}
 	}
 	
-	@Override
-	public Iterator<Carte> iterateur() {
-		return new Iterateur<Carte>();
-	}
-	
 	public Carte piocher() {
-		Iterateur iter = iterateur();
+		Iterateur iter = (Iterateur) iterator();
 		if(iter.hasNext()) {
 			Carte carte = iter.next();
 			iter.remove();
 			return carte;
 		} 
+		else {
+			throw new IllegalStateException("Iterator doesn't has next");
+		}
 	}
 }

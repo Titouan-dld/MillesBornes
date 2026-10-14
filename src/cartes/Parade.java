@@ -1,4 +1,4 @@
-package carte;
+package cartes;
 
 public class Parade extends Bataille {
 
@@ -9,6 +9,14 @@ public class Parade extends Bataille {
 	@Override
 	public String toString() {
 		return this.getType().getParade();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Parade parade) {
+			return type.equals(parade.getType());
+		}
+		return false;
 	}
 	
 }
